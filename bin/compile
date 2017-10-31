@@ -4,4 +4,6 @@ indent() {
   sed -u 's/^/       /'
 }
 
-cp ../*.sh $1/
+ls $1
+ls $2
+ls $3
