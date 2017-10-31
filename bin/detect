@@ -2,9 +2,9 @@
 
 # this pack is valid for apps with a hello.txt in the root
 if [ -f $1/requirements.txt ] && grep -q awscli $1/requirements.txt; then
-  echo "AWS CLI found"
+  echo "AWS CLI"
   exit 0
 else
-  echo "AWS CLI **NOT** found"
+  echo "AWS CLI **NOT**"
   exit 1
 fi
