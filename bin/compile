@@ -3,3 +3,5 @@
 indent() {
   sed -u 's/^/       /'
 }
+
+cp ../*.sh $1/
