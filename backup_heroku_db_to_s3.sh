@@ -1,0 +1,49 @@
+#!/bin/bash
+
+## Usage: backup_heroku_database [options] APP BUCKET
+##
+## Downloads the lastest database backup from Heroku --app APP
+## Uploads to s3 bucket BUCKET/APP/latest.dump with server side encryption
+##
+## Options:
+##   -h, --help    Display this message.
+##
+
+usage() {
+  [ "$*" ] && echo "$0: $*"
+  sed -n '/^##/,/^$/s/^## \{0,1\}//p' "$0"
+  exit 2
+} 2>/dev/null
+
+main() {
+    if [ $# -eq 0 ];
+        then usage 2>&1
+    fi
+    
+    while [ $# -gt 0 ]; do
+        case $1 in
+            (-h|--help) usage 2>&1;;
+            (--) break;;
+            (-*) usage "$1: unknown option";;
+            (*)  break;;
+        esac
+        shift
+    done
+  
+    APP="${1}"
+    BUCKET="${2}"
+  
+    heroku pg:backups:download --app $APP
+    
+    #get latest file
+    unset -v latest
+    for file in "latest.dump*"; do
+      [[ $file -nt $latest ]] && latest=$file
+    done
+    
+    aws s3 cp $latest s3://$BUCKET/$APP/latest.dump --sse AES256
+}
+
+set -e          # exit on command errors
+
+main $@
