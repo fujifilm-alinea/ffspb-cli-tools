@@ -12,5 +12,6 @@ ls $2
 echo "$3"
 ls $3
 
-echo "--"
+PWD
 ls .
+cp ./install/* $1
