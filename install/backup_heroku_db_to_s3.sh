@@ -35,11 +35,8 @@ main() {
   
     heroku pg:backups:download --app $APP
     
-    #get latest file
-    unset -v latest
-    for file in "latest.dump*"; do
-      [[ $file -nt $latest ]] && latest=$file
-    done
+    #get latest dump file
+    latest=`ls -t ./latest.dump* | head -1`
     
     aws s3 cp $latest s3://$BUCKET/$APP/latest.dump --sse AES256
 }
