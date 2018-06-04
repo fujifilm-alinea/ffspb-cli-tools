@@ -8,6 +8,12 @@
 ## Options:
 ##   -h, --help    Display this message.
 ##
+
+if [ "on" != "${HEROKU_SCHEDULER_STATUS,,}" ]; then
+  echo "Heroku Scheduler is set to "$HEROKU_SCHEDULER_STATUS
+  exit 1
+fi
+
 usage() {
   [ "$*" ] && echo "$0: $*"
   sed -n '/^##/,/^$/s/^## \{0,1\}//p' "$0"
