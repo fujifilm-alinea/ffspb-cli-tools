@@ -10,7 +10,7 @@
 ##
 
 if [ "on" != "${HEROKU_SCHEDULER_STATUS,,}" ]; then
-  echo "Heroku Scheduler is set to "$HEROKU_SCHEDULER_STATUS"
+  echo "Heroku Scheduler is set to "$HEROKU_SCHEDULER_STATUS
   exit 1
 fi
 
