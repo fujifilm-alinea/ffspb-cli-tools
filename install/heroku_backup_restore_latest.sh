@@ -37,7 +37,7 @@ main() {
     SOURCE_APP="${1}"
     DEST_APP="${2}"
 
-    LATEST_BACKUP=`heroku pg:backups --app $SOURCE_APP | awk 'NR==4{print $1; exit}'`
+    LATEST_BACKUP=`heroku pg:backups --app $SOURCE_APP | awk 'NR==5{print $1; exit}'`
     DEST_DB_URL=`heroku pg --app $DEST_APP | grep -- "Add-on:" | awk '{print $NF'}`
 
     #echo $SOURCE_APP::$LATEST_BACKUP $DEST_DB_URL --app $DEST_APP --confirm $DEST_APP
